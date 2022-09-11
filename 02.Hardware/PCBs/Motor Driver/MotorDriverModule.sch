@@ -7655,7 +7655,7 @@ Source: &lt;a href="http://componentsearchengine.com/Datasheets/3/MCP6001T-I_LT.
 <part name="R19" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="RESISTOR" device="0805" package3d_urn="urn:adsk.eagle:package:39651/1" value="5K1"/>
 <part name="R20" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="RESISTOR" device="0805" package3d_urn="urn:adsk.eagle:package:39651/1" value="6K2"/>
 <part name="R21" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="RESISTOR" device="0805" package3d_urn="urn:adsk.eagle:package:39651/1" value="9K1"/>
-<part name="R22" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="RESISTOR" device="1206" package3d_urn="urn:adsk.eagle:package:39654/1" value="100R"/>
+<part name="RSENSE" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="RESISTOR" device="1206" package3d_urn="urn:adsk.eagle:package:39654/1" value="100R"/>
 <part name="GND22" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND23" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND25" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
@@ -7919,7 +7919,7 @@ Source: &lt;a href="http://componentsearchengine.com/Datasheets/3/MCP6001T-I_LT.
 <attribute name="NAME" x="238.76" y="130.556" size="1.778" layer="95" font="vector" rot="R180" align="bottom-center"/>
 <attribute name="VALUE" x="238.76" y="133.604" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
 </instance>
-<instance part="R22" gate="G$1" x="175.26" y="101.6" smashed="yes" rot="R90">
+<instance part="RSENSE" gate="G$1" x="175.26" y="101.6" smashed="yes" rot="R90">
 <attribute name="NAME" x="173.736" y="101.6" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="176.784" y="101.6" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
@@ -8050,7 +8050,7 @@ Source: &lt;a href="http://componentsearchengine.com/Datasheets/3/MCP6001T-I_LT.
 </segment>
 <segment>
 <pinref part="GND22" gate="1" pin="GND"/>
-<pinref part="R22" gate="G$1" pin="1"/>
+<pinref part="RSENSE" gate="G$1" pin="1"/>
 <wire x1="175.26" y1="96.52" x2="175.26" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -8175,11 +8175,15 @@ Source: &lt;a href="http://componentsearchengine.com/Datasheets/3/MCP6001T-I_LT.
 <label x="109.22" y="124.46" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="R22" gate="G$1" pin="2"/>
+<pinref part="RSENSE" gate="G$1" pin="2"/>
 <pinref part="R20" gate="G$1" pin="2"/>
 <wire x1="175.26" y1="106.68" x2="175.26" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="109.22" x2="185.42" y2="109.22" width="0.1524" layer="91"/>
 <label x="175.26" y="109.22" size="1.778" layer="95"/>
+<wire x1="175.26" y1="109.22" x2="175.26" y2="124.46" width="0.1524" layer="91"/>
+<junction x="175.26" y="109.22"/>
+<wire x1="175.26" y1="124.46" x2="165.1" y2="124.46" width="0.1524" layer="91"/>
+<label x="165.1" y="124.46" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -8414,7 +8418,7 @@ Source: &lt;a href="http://componentsearchengine.com/Datasheets/3/MCP6001T-I_LT.
 <pinref part="U3" gate="G$1" pin="INB"/>
 <wire x1="40.64" y1="114.3" x2="40.64" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="116.84" x2="55.88" y2="116.84" width="0.1524" layer="91"/>
-<label x="48.26" y="116.84" size="1.778" layer="95"/>
+<label x="45.72" y="116.84" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="J2" gate="J$1" pin="2"/>
