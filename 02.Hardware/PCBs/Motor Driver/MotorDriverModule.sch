@@ -8363,7 +8363,6 @@ Source: &lt;a href="http://componentsearchengine.com/Datasheets/3/MCP6001T-I_LT.
 <part name="GND25" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="J5" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_10" device="&quot;" package3d_urn="urn:adsk.eagle:package:38157/1"/>
 <part name="C9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2"/>
-<part name="SUPPLY7" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC" device=""/>
 <part name="GND24" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 </parts>
 <sheets>
@@ -8647,9 +8646,6 @@ v2-Sep22</text>
 <attribute name="NAME" x="275.844" y="129.921" size="1.778" layer="95"/>
 <attribute name="VALUE" x="275.844" y="124.841" size="1.778" layer="96"/>
 </instance>
-<instance part="SUPPLY7" gate="G$1" x="274.32" y="132.08" smashed="yes">
-<attribute name="VALUE" x="274.32" y="134.874" size="1.778" layer="96" align="bottom-center"/>
-</instance>
 <instance part="GND24" gate="1" x="274.32" y="121.92" smashed="yes">
 <attribute name="VALUE" x="274.32" y="121.666" size="1.778" layer="96" align="top-center"/>
 </instance>
@@ -8782,12 +8778,7 @@ v2-Sep22</text>
 </segment>
 <segment>
 <pinref part="J5" gate="G$1" pin="9"/>
-<wire x1="320.04" y1="83.82" x2="312.42" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="J5" gate="G$1" pin="10"/>
-<wire x1="312.42" y1="83.82" x2="307.34" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="320.04" y1="81.28" x2="312.42" y2="81.28" width="0.1524" layer="91"/>
-<wire x1="312.42" y1="81.28" x2="312.42" y2="83.82" width="0.1524" layer="91"/>
-<junction x="312.42" y="83.82"/>
+<wire x1="320.04" y1="83.82" x2="307.34" y2="83.82" width="0.1524" layer="91"/>
 <label x="307.34" y="83.82" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -8968,11 +8959,6 @@ v2-Sep22</text>
 <label x="116.84" y="119.38" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U4" gate="G$1" pin="VDD"/>
-<wire x1="226.06" y1="106.68" x2="218.44" y2="106.68" width="0.1524" layer="91"/>
-<label x="220.98" y="106.68" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="J5" gate="G$1" pin="7"/>
 <wire x1="320.04" y1="88.9" x2="312.42" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="J5" gate="G$1" pin="8"/>
@@ -8986,10 +8972,6 @@ v2-Sep22</text>
 <pinref part="J1" gate="G$1" pin="16"/>
 <wire x1="320.04" y1="33.02" x2="302.26" y2="33.02" width="0.1524" layer="91"/>
 <label x="304.8" y="33.02" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="C9" gate="G$1" pin="1"/>
-<pinref part="SUPPLY7" gate="G$1" pin="VCC"/>
 </segment>
 </net>
 <net name="B_OUT" class="0">
@@ -9402,6 +9384,24 @@ v2-Sep22</text>
 <pinref part="J1" gate="G$1" pin="1"/>
 <wire x1="320.04" y1="71.12" x2="302.26" y2="71.12" width="0.1524" layer="91"/>
 <label x="304.8" y="71.12" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="3V3" class="0">
+<segment>
+<pinref part="J5" gate="G$1" pin="10"/>
+<wire x1="320.04" y1="81.28" x2="307.34" y2="81.28" width="0.1524" layer="91"/>
+<label x="307.34" y="81.28" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U4" gate="G$1" pin="VDD"/>
+<wire x1="226.06" y1="106.68" x2="218.44" y2="106.68" width="0.1524" layer="91"/>
+<label x="218.44" y="106.68" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="C9" gate="G$1" pin="1"/>
+<wire x1="274.32" y1="132.08" x2="274.32" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="134.62" x2="266.7" y2="134.62" width="0.1524" layer="91"/>
+<label x="266.7" y="134.62" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
