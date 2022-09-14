@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
@@ -13613,7 +13613,7 @@ v1-Sep22</text>
 (medida en i2c expander)</text>
 <text x="270.51" y="-10.16" size="1.778" layer="97">SENSOR RAPIDO
 (medida en CPU)</text>
-<text x="-146.05" y="-11.43" size="1.778" layer="97">3v3 para Filtro de ISENSE</text>
+<text x="-143.51" y="-6.35" size="1.778" layer="97">3v3 para Filtro de ISENSE</text>
 </plain>
 <instances>
 <instance part="HALL_SIM" gate="G$1" x="71.12" y="-17.78" smashed="yes">
