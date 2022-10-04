@@ -8,18 +8,18 @@
  * @copyright Copyright (c) 2022
  * 
  */
-
+#include "Arduino.h"
 const bool CT_CLOCK_WISE = 0;
 const bool CT_COUNTER_CLOCK_WISE = 1;
 const bool CT_ON = 1;
 const bool CT_OFF = 0;
 
-const int PIN_SENSOR_A = 3;
-const int PIN_SENSOR_B = 7;
+const int PIN_SENSOR_A = 12;
+const int PIN_SENSOR_B = 11;
 const int PIN_SENSOR_C = 10;
-const int PIN_START_STOP = 27;
-const int PIN_DIR = 21;
-const int PIN_SPEED_CONTROL = A2;
+const int PIN_START_STOP = 3;
+const int PIN_DIR = 7;
+const int PIN_SPEED_CONTROL = A0;
 
 const int DESIRE_MOTOR_FREQ = 200; //Hz
 const int NUM_POLES = 4;
@@ -28,7 +28,7 @@ const int TOP_FREQ_SENSOR_PWM = DESIRE_MOTOR_FREQ * NUM_POLES * NUM_SENSOR;
 
 const int SAFE_PERC = 100 + 20; // %
 
-bool dir;
+bool dir = CT_CLOCK_WISE;
 bool butt_dir;
 bool prev_butt_dir;
 bool prev_start_stop;
