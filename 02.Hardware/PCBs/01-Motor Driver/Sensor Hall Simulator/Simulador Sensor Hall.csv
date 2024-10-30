@@ -1,0 +1,8 @@
+"Qty";"Value";"Device";"Package";"Parts";"Description";"";
+"1";"";"CONN_05X2PTH";"2X5";"J1";"Multi connection point. Often used as Generic Header-pin footprint for 0.1 inch spaced/style header connections";"";
+"1";"";"RPI_PICO_IG-TH";"RPI_PICO_TH";"X1";"";"";
+"3";"100n";"C-EUC0805K";"C0805K";"C4, C5, C6";"CAPACITOR, European symbol";"";
+"1";"10k";"POTENTIOMETER-PTH-9MM-1/20W-20%";"POT-PTH-ALPS";"VR1";"Potentiometer (Pot)";"";
+"3";"1K";"RESISTOR0805";"0805";"R12, R13, R14";"Generic Resistor Package";"";
+"2";"22K";"RESISTOR0805";"0805";"R1, R2";"Generic Resistor Package";"";
+"2";"MOMENTARY-SWITCH-SPST-SMD-6.2MM-TALL";"MOMENTARY-SWITCH-SPST-SMD-6.2MM-TALL";"TACTILE_SWITCH_SMD_6.2MM_TALL";"S1, S2";"Momentary Switch (Pushbutton) - SPST";"";
