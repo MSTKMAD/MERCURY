@@ -35,8 +35,8 @@ bool prev_start_stop;
 bool start_stop;
 bool status;
 
-bool LUT_clockwise_sensor_A[] = {0, 0, 1, 1, 1, 0};
-bool LUT_clockwise_sensor_B[] = {0, 0, 0, 1, 1, 1};
+bool LUT_clockwise_sensor_A[] = {1, 1, 1, 0, 0, 0};
+bool LUT_clockwise_sensor_B[] = {0, 0, 1, 1, 1, 0};
 bool LUT_clockwise_sensor_C[] = {1, 0, 0, 0, 1, 1};
 
 int step = 0;
@@ -54,12 +54,12 @@ void setup()
     pinMode(PIN_START_STOP, INPUT);
     pinMode(PIN_SPEED_CONTROL, INPUT);
     pinMode(PIN_DIR, INPUT);
+    delay(1000);
 }
 
 void loop()
 {
     while (status == CT_ON)
-
     {
         digitalWrite(PIN_SENSOR_A, LUT_clockwise_sensor_A[step]);
         digitalWrite(PIN_SENSOR_B, LUT_clockwise_sensor_B[step]);
