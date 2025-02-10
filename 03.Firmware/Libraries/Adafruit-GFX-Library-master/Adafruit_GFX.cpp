@@ -1368,17 +1368,18 @@ size_t Adafruit_GFX::write(uint8_t c)
     }
     else if (c != '\r')
     { // Ignore carriage returns
-      //if (wrap && ((cursor_x + textsize_x * 6) > _width))
+      // if (wrap && ((cursor_x + textsize_x * 6) > _width))
       //{                             // Off right?
-      //  cursor_x = 0;               // Reset x to zero,
-      //  cursor_y += textsize_y * 8; // advance y one line
-     // }
+      //   cursor_x = 0;               // Reset x to zero,
+      //   cursor_y += textsize_y * 8; // advance y one line
+      // }
       drawChar(cursor_x, cursor_y, c, textcolor, textbgcolor, textsize_x,
                textsize_y);
       if (c == '1')
       {
         /* code */
-        cursor_x += 19; // Advance x one char
+        // cursor_x += 9; // Advance x one char
+        cursor_x += textsize_x * 6; // Advance x one char
       }
       else
       {
