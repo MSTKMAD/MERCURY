@@ -967,7 +967,7 @@ void SenseCurrent()
         motor_dut_current = motor_dut_current / C_NSAMPLES;
         motor_load_current = motor_load_current / C_NSAMPLES;
         motor_load_voltage = motor_load_voltage / C_NSAMPLES;
-        
+
         if ((index_curva == 0) && (resistance == 0) && (one_time == false))
         {
             one_time = true;
@@ -1109,6 +1109,7 @@ void SetVoltage(int v)
 }
 void SpeedMotorDutByHall()
 {
+    float percentage_SPD = 0;
     prev_hall_st = actual_hall_st;
     actual_hall_st = digitalRead(C_PIN_HALL);
 
@@ -1128,13 +1129,15 @@ void SpeedMotorDutByHall()
         cont_pulses = 0;
         newSpeed = true;
     }
+    percentage_SPD = (speed_dut) * 100 / 250;
+    MCP.setPercentage(percentage_SPD);
 }
 void UpdateLeds(bool dut_out, bool pol)
 {
     digitalWrite(C_PIN_LED1, pol);
     digitalWrite(C_PIN_LED2, actual_hall_st);
-    digitalWrite(C_PIN_LED3, LOW);
-    digitalWrite(C_PIN_LED4, dut_out);
+    // digitalWrite(C_PIN_LED3, LOW);
+    // digitalWrite(C_PIN_LED4, dut_out);
 }
 void PIDControl()
 {
