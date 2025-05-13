@@ -1,0 +1,16 @@
+"Qty";"Value";"Device";"Package";"Parts";"Description";"";
+"1";" ";"RESISTOR0603";"0603";"R3";"Generic Resistor Package";"";
+"3";"0R";"RESISTOR0603";"0603";"R1, R2, R6";"Generic Resistor Package";"";
+"1";"100n";"0.1UF-0603-25V-(+80/-20%)";"0603";"C8";"0.1µF ceramic capacitors";"";
+"1";"100n 50v";"C-USC0805";"C0805";"C4";"CAPACITOR, American symbol";"";
+"2";"10uF/25V";"C_CHIP-0805(2012-METRIC)";"CAPC2012X110";"C1, C2";"Capacitor - Generic";"";
+"1";"169k";"RESISTOR0603";"0603";"R4";"Generic Resistor Package";"";
+"1";"1u";"4.7UF-6.3V-10%(0603)0603";"0603-CAP";"C5";"CAP-08280";"";
+"1";"2.2u";"4.7UF-6.3V-10%(0603)0603";"0603-CAP";"C6";"CAP-08280";"";
+"1";"39k";"RESISTOR0603";"0603";"R5";"Generic Resistor Package";"";
+"1";"AP2205-33W5-7";"AP2205-W5-7";"SOT95P282X145-5N";"U2";"LDO Voltage Regulators LDO CMOS LowCurr";"";
+"1";"ATTINY85V-10SUR";"ATTINY85V-10SUR";"SOIC127P798X216-8N";"U4";"MICROCHIP - ATTINY85V-10SUR - MCU, 8BIT, AVR, 10MHZ, WSOIC-8";"";
+"1";"MCP9700T-E_TT";"MCP9700T-E_TT";"SOT95P237X112-3N";"U1";"Linear Active Thermistor 10mV/C SOT23";"";
+"1";"MP6551GQB-Z";"MP6551GQB-Z";"MP6551GQBZ";"U3";"Motor / Motion / Ignition Controllers & Drivers 2.5V -14V, 5A H-bridge motor driver";"";
+"4";"TESTPAD_TPSQB1,27";"TESTPAD_TPSQB1,27";"TESTPAD_B1,27";"3V3, GND, USB+, USB-";"Test pad";"";
+"2";"TESTPAD_TPSQTP10SQ";"TESTPAD_TPSQTP10SQ";"TESTPAD_TP10SQ";"NEGRO, VROVER+";"Test pad";"";
