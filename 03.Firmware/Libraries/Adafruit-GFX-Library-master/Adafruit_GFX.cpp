@@ -1398,16 +1398,16 @@ size_t Adafruit_GFX::write(uint8_t c)
     }
     else if (c != '\r')
     {
-      uint8_t first = pgm_read_byte(&gfxFont->first);
-      if ((c >= first) && (c <= (uint8_t)pgm_read_byte(&gfxFont->last)))
-      {
-        GFXglyph *glyph = pgm_read_glyph_ptr(gfxFont, c - first);
-        uint8_t w = pgm_read_byte(&glyph->width),
-                h = pgm_read_byte(&glyph->height);
-        if ((w > 0) && (h > 0))
-        {                                                      // Is there an associated bitmap?
-          int16_t xo = (int8_t)pgm_read_byte(&glyph->xOffset); // sic
-          if (wrap && ((cursor_x + textsize_x * (xo + w)) > _width))
+      uint8_t first = pgm_read_byte(&gfxFont->first);                    // Comprueba el primer caracter de la fuente
+      if ((c >= first) && (c <= (uint8_t)pgm_read_byte(&gfxFont->last))) // Comprueba si el char es printeable
+      {                                                                  //
+        GFXglyph *glyph = pgm_read_glyph_ptr(gfxFont, c - first);        // Get glyph data
+        uint8_t w = pgm_read_byte(&glyph->width),                        // Width of glyph
+            h = pgm_read_byte(&glyph->height);                           // Height of glyph
+        if ((w > 0) && (h > 0))                                          // Compruebo si el tamaño y la altura es > 0
+        {                                                                // Is there an associated bitmap?
+          int16_t xo = (int8_t)pgm_read_byte(&glyph->xOffset);           // X offset into glyph
+          if (wrap && ((cursor_x + textsize_x * (xo + w)) > _width))     // Si se tiene que Wrapear a la pantalla se comprueba si nos salimos de la pantalla
           {
             cursor_x = 0;
             cursor_y += (int16_t)textsize_y *

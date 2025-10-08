@@ -25,22 +25,22 @@
 #define _Adafruit_SSD1306_H_
 
 // ONE of the following three lines must be #defined:
-//#define SSD1306_128_64 ///< DEPRECTAED: old way to specify 128x64 screen
+// #define SSD1306_128_64 ///< DEPRECTAED: old way to specify 128x64 screen
 #define SSD1306_128_32 ///< DEPRECATED: old way to specify 128x32 screen
-//#define SSD1306_96_16  ///< DEPRECATED: old way to specify 96x16 screen
+// #define SSD1306_96_16  ///< DEPRECATED: old way to specify 96x16 screen
 // This establishes the screen dimensions in old Adafruit_SSD1306 sketches
 // (NEW CODE SHOULD IGNORE THIS, USE THE CONSTRUCTORS THAT ACCEPT WIDTH
 // AND HEIGHT ARGUMENTS).
 
 // Uncomment to disable Adafruit splash logo
-//#define SSD1306_NO_SPLASH
+// #define SSD1306_NO_SPLASH
 
 #if defined(ARDUINO_STM32_FEATHER)
 typedef class HardwareSPI SPIClass;
 #endif
 
 #include <Adafruit_GFX.h>
-#include <SPI.h>
+#include "SPI.h"
 #include <Wire.h>
 
 #if defined(__AVR__)
@@ -51,6 +51,8 @@ typedef uint8_t PortMask;
 typedef volatile RwReg PortReg;
 typedef uint32_t PortMask;
 #define HAVE_PORTREG
+#elif defined(ARDUINO_ARCH_RTTHREAD)
+#undef HAVE_PORTREG
 #elif (defined(__arm__) || defined(ARDUINO_FEATHER52)) &&                      \
     !defined(ARDUINO_ARCH_MBED) && !defined(ARDUINO_ARCH_RP2040)
 typedef volatile uint32_t PortReg;
@@ -134,7 +136,7 @@ public:
                    uint32_t clkAfter = 100000UL);
   Adafruit_SSD1306(uint8_t w, uint8_t h, int8_t mosi_pin, int8_t sclk_pin,
                    int8_t dc_pin, int8_t rst_pin, int8_t cs_pin);
-  Adafruit_SSD1306(uint8_t w, uint8_t h, SPIClass *spi, int8_t dc_pin,
+  Adafruit_SSD1306(uint8_t w, uint8_t h, SPIClassRP2040 *spi, int8_t dc_pin,
                    int8_t rst_pin, int8_t cs_pin, uint32_t bitrate = 8000000UL);
 
   // DEPRECATED CONSTRUCTORS - for back compatibility, avoid in new projects
@@ -170,7 +172,7 @@ protected:
   void ssd1306_command1(uint8_t c);
   void ssd1306_commandList(const uint8_t *c, uint8_t n);
 
-  SPIClass *spi;   ///< Initialized during construction when using SPI. See
+  SPIClassRP2040 *spi;   ///< Initialized during construction when using SPI. See
                    ///< SPI.cpp, SPI.h
   TwoWire *wire;   ///< Initialized during construction when using I2C. See
                    ///< Wire.cpp, Wire.h

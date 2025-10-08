@@ -1,31 +1,27 @@
-#include <Arduino.h>
-#include <U8g2lib.h>
-#ifdef U8X8_HAVE_HW_SPI
-#include <SPI.h>
-#endif
-#ifdef U8X8_HAVE_HW_I2C
-#include <Wire.h>
-#endif
+// archivo que pruebe una pantalla oled  ssd1306 con un display 0.96 pulgadas por SPI
+#include "Adafruit_SSD1306.h"
 
-//U8G2_SSD1306_72X40_ER_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
-U8G2_SSD1306_72X40_ER_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
-float num = 10.5;
-// font = u8g2_font_battery24_tr;
-// font = u8g2_font_freedoomr25_tu;
-void setup()
-{
-  // put your setup code here, to run once:
-  u8g2.begin();
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+const uint16_t C_PIN_DC = 11;
+const uint16_t C_PIN_SS_LED = 17;
+const uint16_t C_PIN_SCK = 18;
+const uint16_t C_PIN_MOSI = 19;
+const uint16_t C_PIN_DSP_RST = 22;
+
+Adafruit_SSD1306 display(128, 64, &SPI, C_PIN_DC, C_PIN_DSP_RST, C_PIN_SS_LED);
+
+void setup() {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.print("Hello, World!");
+  display.display();
 }
 
-void loop()
-{
-  // put your main code here, to run repeatedly:
-  //u8g2.clearBuffer();
-  //u8g2.setFontMode(1);
-  //u8g2.setFont(u8g2_font_freedoomr25_mn);
-  //u8g2.setCursor(0, 40);
-  //u8g2.print("10,5");
-  //u8g2.sendBuffer();
-  delay(250);
+void loop() {
+  // No se necesita hacer nada en el loop
 }
