@@ -77,6 +77,8 @@ const int C_TIME_SPEED_MEAS_MS = 10000;
 
 const int C_MODE_PWM = 0x0A;
 const int C_MODE_VOLT = 0x0B;
+const int C_MODE_ENDURANCE = 0x0C;
+
 int mode = C_MODE_VOLT;
 
 // FRAMES CONST
@@ -169,6 +171,16 @@ bool pwm_control = false;
 int duty_pwm = 0;
 int frecuency_pwm = 1000;
 
+// Endurance
+const int C_ENDURANCE_TIME = 0;
+int h_endurance_time = 0;   // hours
+int min_endurance_time = 0; // minutes
+int sec_endurance_time = 0; // seconds
+bool flag_temp_endurance = false;
+bool stop_endurance = false;
+
+MilliTimer timer_endurance;
+
 void setup()
 {
     Serial.begin(115200);
@@ -223,12 +235,67 @@ void setup()
 // ------------------------------ LOOP ----------------------------------
 void loop()
 {
-    CurvaResistencia();
-    // ResistancesLoadTorque(resistance);
+    if (mode != C_MODE_ENDURANCE)
+    {
+        CurvaResistencia();
+        // ResistancesLoadTorque(resistance);
+    }
+    else
+    {
+        if (timer_endurance.poll() != C_TIMER_NOT_EXPIRED)
+        {
+            if (flag_temp_endurance)
+            {
+                if ((motor_load_voltage * 3300 / 4096 * 446 / 56) < 1000)
+                {
+                    if (pol_load == true)
+                    {
+                        pol_load = false;
+                    }
+                    else
+                    {
+                        pol_load = true;
+                    }
+                }
+                sec_endurance_time++;
+                if (stop_endurance &&(sec_endurance_time % 5 == 0))
+                {
+                    stop_endurance = false;
+                    pwm_control = true;
+                }
+                
+                if (sec_endurance_time >= 60)
+                {
+                    sec_endurance_time = 0;
+                    min_endurance_time++;
+                    if (min_endurance_time % 15 == 0)
+                    {
+                        pwm_control = false;
+                        stop_endurance = true;
+                    }
+                    if (min_endurance_time >= 60)
+                    {
+                        min_endurance_time = 0;
+                        h_endurance_time++;
+                    }
+                }
+                update_display = true;
+            }
+            else
+            {
+                sec_endurance_time = 0;
+                min_endurance_time = 0;
+                h_endurance_time = 0;
+            }
+            timer_endurance.set(1000);
+        }
+    }
+
     SpeedMotorDutByHall();
     // SetVoltage(volts);
     SenseCurrent();
     digitalWrite(C_PIN_POL_DUT, pol_dut);
+    digitalWrite(C_PIN_POL_LOAD, pol_load);
     if (pwm_control == false)
     {
         PWM_Instance->setPWM(C_PIN_DUT, frecuency_pwm, 0);
@@ -238,7 +305,6 @@ void loop()
         PWM_Instance->setPWM(C_PIN_DUT, frecuency_pwm, duty_pwm);
         PIDControl();
     }
-
     UpdateLeds(dut_control, pol_dut);
 }
 void setup1()
@@ -270,13 +336,7 @@ void loop1()
                 display.clearDisplay();
                 display.setTextSize(2);
                 display.setTextColor(WHITE);
-                display.setCursor(0, 0);
-                display.print(" ");
-                display.setCursor(40, 0);
-                display.print("PWM");
-                display.setCursor(0, 25);
-                display.print(">");
-                display.setCursor(40, 25);
+                display.setCursor(40, 20);
                 display.print("Volt");
                 display.setCursor(0, 50);
                 display.print(">");
@@ -298,6 +358,16 @@ void loop1()
             }
             else if ((actual_boton_3 == LOW) && (prev_boton_3 == HIGH))
             {
+                mode = C_MODE_ENDURANCE;
+                if (dut_control == true)
+                {
+                    duty_pwm = 100;
+                }
+                else
+                {
+                    duty_pwm = 0;
+                }
+                update_display = true;
             }
             break;
 
@@ -588,14 +658,8 @@ void loop1()
                 display.clearDisplay();
                 display.setTextSize(2);
                 display.setTextColor(WHITE);
-                display.setCursor(0, 0);
-                display.print(">");
-                display.setCursor(40, 0);
+                display.setCursor(50, 20);
                 display.print("PWM");
-                display.setCursor(0, 25);
-                display.print(" ");
-                display.setCursor(40, 25);
-                display.print("Volt");
                 display.setCursor(0, 50);
                 display.print(">");
                 display.setCursor(64, 50);
@@ -611,6 +675,16 @@ void loop1()
             }
             else if ((actual_boton_2 == LOW) && (prev_boton_2 == HIGH))
             {
+                mode = C_MODE_ENDURANCE;
+                if (dut_control == true)
+                {
+                    duty_pwm = 100;
+                }
+                else
+                {
+                    duty_pwm = 0;
+                }
+                update_display = true;
             }
             else if ((actual_boton_3 == LOW) && (prev_boton_3 == HIGH))
             {
@@ -939,6 +1013,227 @@ void loop1()
             else
             {
             }
+            break;
+        }
+    }
+    else if (mode == C_MODE_ENDURANCE)
+    {
+        switch (actual_frame)
+        {
+        case C_FRAME_0:
+            if ((update_display == true) || (newSpeed == true))
+            {
+                newSpeed = false;
+                update_display = false;
+                display.clearDisplay();
+                display.setTextSize(2);
+                display.setTextColor(WHITE);
+                display.setCursor(10, 20);
+                display.print("ENDURANCE");
+                display.setCursor(0, 50);
+                display.print(">");
+                display.setCursor(64, 50);
+                display.print("+");
+                display.setCursor(110, 50);
+                display.print("-");
+                display.display();
+            }
+            if ((actual_boton_1 == LOW) && (prev_boton_1 == HIGH))
+            {
+                actual_frame = C_FRAME_1;
+                update_display = true;
+            }
+            else if ((actual_boton_2 == LOW) && (prev_boton_2 == HIGH))
+            {
+                mode = C_MODE_VOLT;
+                if (dut_control == true)
+                {
+                    duty_pwm = 100;
+                }
+                else
+                {
+                    duty_pwm = 0;
+                }
+                update_display = true;
+            }
+            else if ((actual_boton_3 == LOW) && (prev_boton_3 == HIGH))
+            {
+                mode = C_MODE_PWM;
+                update_display = true;
+            }
+            break;
+
+        case C_FRAME_1: // Seteo de Voltaje
+            // DISPLAY
+            if ((update_display == true) || (newSpeed == true))
+            {
+                newSpeed = false;
+                update_display = false;
+                display.clearDisplay();
+                display.setTextSize(2);
+                display.setTextColor(WHITE);
+                display.setCursor(0, 0);
+                display.print("Vdut:");
+                display.setCursor(64, 0);
+                display.print((float)volts / 10);
+                display.setCursor(0, 25);
+                display.print("Sdut:");
+                display.fillRect(64, 25, 100, 16, BLACK);
+                display.setCursor(64, 25);
+                display.print(speed_dut);
+                display.setCursor(0, 50);
+                display.print(">");
+                display.setCursor(64, 50);
+                display.print("+");
+                display.setCursor(110, 50);
+                display.print("-");
+                display.display();
+            }
+            // BOTONES
+            if ((actual_boton_1 == LOW) && (prev_boton_1 == HIGH))
+            {
+                actual_frame = C_FRAME_2;
+                update_display = true;
+            }
+            else if ((actual_boton_2 == LOW) && (prev_boton_2 == HIGH))
+            {
+                volts += 1;
+                volts = constrain(volts, 20, 160);
+                update_display = true;
+            }
+            else if ((actual_boton_3 == LOW) && (prev_boton_3 == HIGH))
+            {
+                volts -= 1;
+                volts = constrain(volts, 20, 160);
+                update_display = true;
+            }
+
+            break;
+
+        case C_FRAME_2: // Temporizador
+            // DISPLAY
+            if ((update_display == true) || (newSpeed == true))
+            {
+                newSpeed = false;
+                update_display = false;
+                display.clearDisplay();
+                display.setTextSize(2);
+                display.setTextColor(WHITE);
+                display.setCursor(0, 0);
+                display.print("Time:");
+                if (flag_temp_endurance)
+                {
+                    display.setCursor(64, 0);
+                    display.print("ON");
+                }
+                else
+                {
+                    display.setCursor(64, 0);
+                    display.print("OFF");
+                }
+
+                display.setCursor(0, 20);
+                display.print(h_endurance_time);
+                display.setCursor(40, 20);
+                display.print(min_endurance_time);
+                display.setCursor(80, 20);
+                display.print(sec_endurance_time);
+                display.setCursor(0, 50);
+                display.print(">");
+                display.setCursor(64, 50);
+                display.print("ON");
+                display.setCursor(100, 50);
+                display.print("OFF");
+                display.display();
+            }
+            if ((actual_boton_1 == LOW) && (prev_boton_1 == HIGH))
+            {
+                actual_frame = C_FRAME_3;
+                update_display = true;
+            }
+            else if ((actual_boton_2 == LOW) && (prev_boton_2 == HIGH))
+            {
+                if (flag_temp_endurance == false)
+                {
+                    flag_temp_endurance = true;
+                    timer_endurance.set(1000);
+                    pwm_control = true;
+                    duty_pwm = 100;
+                    ResistancesLoadTorque(0b1111);
+                }
+            }
+            else if ((actual_boton_3 == LOW) && (prev_boton_3 == HIGH))
+            {
+                flag_temp_endurance = false;
+                pwm_control = false;
+                duty_pwm = 0;
+                ResistancesLoadTorque(0b0000);
+            }
+            else
+            {
+            }
+            break;
+        case C_FRAME_3: // Seguimiento de Valores
+
+            if ((update_display == true) || (newSense == true))
+            {
+                newSense = false;
+                update_display = false;
+                display.clearDisplay();
+                display.setTextSize(1);
+                display.setTextColor(WHITE);
+                display.setCursor(0, 0);
+                display.print("Vdut:");
+                display.setCursor(32, 0);
+                display.print((float)volts / 10);
+                display.setCursor(0, 25);
+                display.print("Idut:");
+                display.setCursor(32, 25);
+                display.print(motor_dut_current * 3300 / 4096 * 10 / 15);
+                display.setCursor(64, 0);
+                display.print("Vload:");
+                display.setCursor(100, 0);
+                display.print(motor_load_voltage * 3300 / 4096 * 446 / 56);
+                display.setCursor(64, 25);
+                display.print("Iload:");
+                display.setCursor(100, 25);
+                display.print(motor_load_current * 3300 / 4096 * 10 / 15);
+                display.setCursor(0, 50);
+                display.print(">");
+                display.setCursor(60, 50);
+                display.print("ON/OFF");
+                display.setCursor(110, 50);
+                display.print("POL");
+                display.display();
+            }
+            if ((actual_boton_1 == LOW) && (prev_boton_1 == HIGH))
+            {
+                actual_frame = C_FRAME_0;
+                update_display = true;
+            }
+            else if ((actual_boton_2 == LOW) && (prev_boton_2 == HIGH))
+            {
+                if (pwm_control == true)
+                {
+                    pwm_control = false;
+                    duty_pwm = 0;
+                    ResistancesLoadTorque(0b0000);
+                }
+                else
+                {
+                    pwm_control = true;
+                    duty_pwm = 100;
+                    ResistancesLoadTorque(0b1111);
+                }
+                update_display = true;
+            }
+            else if ((actual_boton_3 == LOW) && (prev_boton_3 == HIGH))
+            {
+                update_display = true;
+            }
+            break;
+
+        default:
             break;
         }
     }
